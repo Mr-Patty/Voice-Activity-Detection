@@ -58,13 +58,11 @@ threshold - threshold предсказания, нужен для вывода �
 
 ## Запуск модели на одном файле
 ```
-python run.py --test_audio <path2audio> --checkpoint data/vad.pt --number 1000 --device cuda --type torch --threshold 0.7
+python run.py --test_audio <path2audio> --checkpoint data/vad.pt --device cuda --type torch --threshold 0.7
 ```
 test_audio - путь к аудио файлу
 
 checkpoint - путь к предобученной модели либо pytorch либо onnx
-
-number - количество файлов для обучения (нужно так как все данные могут не поместиться)
 
 type - тип предобученной модели либо pytorch либо onnx. Возможные варианты: torch, onnx
 
