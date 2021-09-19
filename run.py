@@ -19,7 +19,7 @@ def to_numpy(tensor):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--test_audio', default='test', help='Path to test audio file')
+    parser.add_argument('--test_audio', help='Path to test audio file')
     parser.add_argument('--checkpoint', default='data/vad.pt', help='Path to saved checkpoint')
     parser.add_argument('--device', default='cuda', help='device for pytorch model')
     parser.add_argument('--type', default='torch', help='type of model onnx or torch')
