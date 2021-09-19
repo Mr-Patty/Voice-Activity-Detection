@@ -24,13 +24,12 @@ if __name__ == '__main__':
     namespace = parser.parse_args()
     argv = vars(namespace)
     
-    # Перевести flac to wav
-    bash_command = "bash converter.sh -f {}".format(argv['path_libri'])
-    subprocess.run(bash_command.split(), shell=True, check=True)
+
+#     bash_command = "bash converter.sh -f {}".format(argv['path_libri'])
+#     subprocess.run(bash_command.split(), shell=True, check=True)
     
-    # Ресемплить nonspeech данные
-    bash_command = "bash changesr.sh -f {}".format(argv['path_nonspeech'])
-    subprocess.run(bash_command.split(), shell=True, check=True)
+#     bash_command = "bash changesr.sh -f {}".format(argv['path_nonspeech'])
+#     subprocess.run(bash_command.split(), shell=True, check=True)
     
     mypath = argv['path_libri']
     waves = {}
@@ -39,7 +38,7 @@ if __name__ == '__main__':
             if 'wav' in name:
                 waves[name] = dirpath
     
-    with opent('waves.json', 'w') as f:
+    with open('waves.json', 'w') as f:
         json.dump(waves, f)
                 
     vad_dict = defaultdict(list)
