@@ -81,6 +81,11 @@ def data_processing(data):
     return features, labels
 
 
+def processAudio(wave):
+    mfcc = audio_transforms(torch.from_numpy(wave).float())[:, :-1].transpose(0, 1) # todo
+    return mfcc
+
+
 def getTrainSamples(samples_number, train_samples, waves, nonspeech_dict):
     
     train_X = []
