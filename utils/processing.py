@@ -82,10 +82,12 @@ def data_processing(data):
 
 
 def process_audio(wave):
-    transform = torchaudio.transforms.MFCC(sample_rate=16000, n_mfcc=40,
-                                           melkwargs={'win_length': 400, 'hop_length': 160,
-                                                      "center": True, 'n_mels': 64})
-    mfcc = transform(torch.from_numpy(wave).float())[:, :-1].transpose(0, 1)
+    audio_transforms = nn.Sequential(
+        torchaudio.transforms.MFCC(sample_rate=16000, n_mfcc=40,
+                                   melkwargs={'win_length': 400, 'hop_length': 160, "center": True, 'n_mels': 64}),
+        torchaudio.transforms.SlidingWindowCmn(cmn_window=300, norm_vars=True, center=True)
+    )
+    mfcc = audio_transforms(torch.from_numpy(wave).float())[:, :-1].transpose(0, 1)
     return mfcc
 
 
