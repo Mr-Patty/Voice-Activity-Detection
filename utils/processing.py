@@ -1,6 +1,8 @@
+import os
 import math
 import torch
 import torchaudio
+import random
 
 import soundfile as sf
 import torch.nn as nn
@@ -140,4 +142,4 @@ def get_test_samples(max_samples, test_path, dev_samples):
         test_X.append(mfcc)
         test_y.append(target)
     
-    return train_X, train_y
+    return test_X, test_y

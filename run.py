@@ -39,7 +39,6 @@ if __name__ == '__main__':
         model = argv['checkpoint']
     else:
         print('model type must be onnx or torch')
-        return
 
     audio_file = argv['test_audio']
     device = argv['device']
