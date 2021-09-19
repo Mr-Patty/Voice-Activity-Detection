@@ -81,7 +81,15 @@ def data_processing(data):
     return features, labels
 
 
-def getTrainSamples(samples_number, train_samples, waves, nonspeech_dict):
+def process_audio(wave):
+    transform = torchaudio.transforms.MFCC(sample_rate=16000, n_mfcc=40,
+                                           melkwargs={'win_length': 400, 'hop_length': 160,
+                                                      "center": True, 'n_mels': 64})
+    mfcc = transform(torch.from_numpy(wave).float())[:, :-1].transpose(0, 1)
+    return mfcc
+
+
+def get_train_samples(samples_number, train_samples, waves, nonspeech_dict):
     
     train_X = []
     train_Y = []
@@ -116,7 +124,8 @@ def getTrainSamples(samples_number, train_samples, waves, nonspeech_dict):
     
     return train_X, train_Y
 
-def getTestSamples(max_samples, test_path, dev_samples):
+
+def get_test_samples(max_samples, test_path, dev_samples):
     
     test_y = []
     test_X = []
