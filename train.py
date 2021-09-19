@@ -19,6 +19,7 @@ class CustomDataset(torch.utils.data.Dataset):
     def __init__(self,sample, target):
         self.samples = sample
         self.targets = target
+        
 
     def __getitem__(self, n):
         return self.samples[n].float(), torch.from_numpy(self.targets[n]).float()
@@ -27,8 +28,7 @@ class CustomDataset(torch.utils.data.Dataset):
         return len(self.samples)
 
 
-def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64, device='cuda', each=20, step_size=5,
-               class_weight=[0.65, 0.35]):
+def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64, device='cuda', each=20, step_size=5, class_weight=[0.65, 0.35]):
     
     model.to(device)
     optim = torch.optim.Adam(model.parameters(), lr=lr)
@@ -70,6 +70,7 @@ def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64,
                 loss.backward()
                 optim.step()
 
+
                 mean_loss += loss.detach().cpu().item()*len(batch_x)
             mean_loss /= len(train_dataset)
             scheduler.step()
@@ -77,7 +78,7 @@ def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64,
 
             if epoch != 0 and epoch % each == 0:
                 check_path = os.path.join(checkpoints_path, 'model_checpoint{}'.format(datetime.now().strftime("_%Y%m%d_%H%M%S")) + '.pt')
-                torch.save({odel.state_dict(), check_path)
+                torch.save(model.state_dict(), check_path)
             iterator.set_postfix({'train': mean_loss})
         
         except KeyboardInterrupt:
@@ -111,7 +112,7 @@ if __name__ == '__main__':
             signal, samplerate = sf.read(path)
             nonspeech_dict[i] = signal
     
-    with opent('waves.json', 'w') as f:
+    with open('waves.json', 'r') as f:
         waves = json.load(f)
     
     samples_number = int(argv['number'])

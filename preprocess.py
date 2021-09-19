@@ -25,11 +25,11 @@ if __name__ == '__main__':
     argv = vars(namespace)
     
 
-#     bash_command = "bash converter.sh -f {}".format(argv['path_libri'])
-#     subprocess.run(bash_command.split(), shell=True, check=True)
+    bash_command = "bash converter.sh -f {}".format(argv['path_libri'])
+    subprocess.run(bash_command.split(), shell=True, check=True)
     
-#     bash_command = "bash changesr.sh -f {}".format(argv['path_nonspeech'])
-#     subprocess.run(bash_command.split(), shell=True, check=True)
+    bash_command = "bash changesr.sh -f {}".format(argv['path_nonspeech'])
+    subprocess.run(bash_command.split(), shell=True, check=True)
     
     mypath = argv['path_libri']
     waves = {}

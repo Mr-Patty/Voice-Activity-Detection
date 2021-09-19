@@ -76,7 +76,6 @@ if __name__ == '__main__':
         model = argv['checkpoint']
     else:
         print('model type must be onnx or torch')
-        return
     
     max_samples = int(argv['number'])
     test_path = argv['test_path']
