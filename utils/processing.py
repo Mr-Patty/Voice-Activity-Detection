@@ -1,8 +1,17 @@
 import math
+import torch
+import torchaudio
+
+import soundfile as sf
+import torch.nn as nn
 import numpy as np
 
+from tqdm import tqdm
+from os import listdir
+from webrtc_utils import *
 
-def get_white_noise(signal, SNR) :
+
+def get_white_noise(signal, SNR):
     #RMS value of signal
     RMS_s = math.sqrt(np.mean(signal**2))
     #RMS values of noise
@@ -12,7 +21,8 @@ def get_white_noise(signal, SNR) :
     return noise
 
 
-#given a signal, noise (audio) and desired SNR, this gives the noise (scaled version of noise input) that gives the desired SNR
+# given a signal, noise (audio) and desired SNR, this gives the noise (scaled version of noise input) that gives the
+# desired SNR
 def get_noise_from_sound(signal, noise, SNR):
     RMS_s = math.sqrt(np.mean(signal**2))
     #required RMS of noise
@@ -43,7 +53,8 @@ def frame_generator(frame_duration_ms, audio, sample_rate):
                
     
 audio_transforms = nn.Sequential(
-    torchaudio.transforms.MFCC(sample_rate=16000, n_mfcc=40, melkwargs={'win_length':400, 'hop_length':160, "center":True, 'n_mels':64}),
+    torchaudio.transforms.MFCC(sample_rate=16000, n_mfcc=40, melkwargs={'win_length': 400, 'hop_length': 160,
+                                                                        "center": True, 'n_mels': 64}),
     torchaudio.transforms.SlidingWindowCmn(cmn_window=600, norm_vars=True, center=True)
 )
 
@@ -113,8 +124,7 @@ def getTestSamples(max_samples, test_path, dev_samples):
         path = os.path.join(test_path, key)
         target = np.array(dev_samples[key])
         signal, samplerate = sf.read(path)
-        
-        
+
         mfcc = audio_transforms(torch.from_numpy(signal).float())[:,:-1].transpose(0, 1)
         test_X.append(mfcc)
         test_y.append(target)

@@ -1,5 +1,6 @@
+import numpy as np
+
 import matplotlib.pyplot as plt
-import librosa.display
 
 def plot_spectrogram(spec, title=None, ylabel='freq_bin', aspect='auto', xmax=None):
     fig, axs = plt.subplots(1, 1)

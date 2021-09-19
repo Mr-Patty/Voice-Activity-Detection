@@ -1,13 +1,14 @@
-import os
-import random
 import argparse
+import torch
 import pickle
 
+import numpy as np
 import torch.utils.data as data_utils
 
+from sklearn.metrics import classification_report
 from models.vad_models import LSTMModel
-from datetime import datetime
 from utils.processing import *
+from tqdm import tqdm
 
 
 class CustomDataset(torch.utils.data.Dataset):
@@ -28,7 +29,6 @@ def testModel(model, test_X, test_y, device='cuda', model_type='torch'):
     
     
     test_dataset = CustomDataset(test_X, test_y)
-    use_cuda = device == 'cuda'
 
     print('DATASET SIZE: {}'.format(len(test_dataset)))
     
