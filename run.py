@@ -31,6 +31,7 @@ if __name__ == '__main__':
     if model_type == 'torch':
         model = LSTMModel(inpud_dim=40, hidden_dim=64, n_layers=2, dropout=0.5).float()
         model.load_state_dict(torch.load(argv['checkpoint']))
+        model.eval()
 
     elif model_type == 'onnx':
         onnx_model = onnx.load(argv['checkpoint'])
@@ -53,7 +54,8 @@ if __name__ == '__main__':
     features = process_audio(data)
     if model_type == 'torch':
         model.to(device)
-        output = to_numpy(model(torch.unsqueeze(features, 0).float().to(device))).reshape(features.shape[0])
+        with torch.no_grad():
+            output = to_numpy(model(torch.unsqueeze(features, 0).float().to(device))).reshape(features.shape[0])
     elif model_type == 'onnx':
         ort_session = onnxruntime.InferenceSession(model, providers=providers)
         ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(torch.unsqueeze(features, 0))}
