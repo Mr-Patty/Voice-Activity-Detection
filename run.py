@@ -50,7 +50,7 @@ if __name__ == '__main__':
     thr = float(argv['threshold'])
 
     data, samplerate = sf.read(argv['test_audio'])
-    features = processAudio(data)
+    features = process_audio(data)
     if model_type == 'torch':
         model.to(device)
         output = to_numpy(model(torch.unsqueeze(features, 0).float().to(device))).reshape(features.shape[0])

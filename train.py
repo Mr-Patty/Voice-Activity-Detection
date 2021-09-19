@@ -116,7 +116,7 @@ if __name__ == '__main__':
         waves = json.load(f)
     
     samples_number = int(argv['number'])
-    train_X, train_y = getTrainSamples(samples_number, train_samples, waves, nonspeech_dict)
+    train_X, train_y = get_train_samples(samples_number, train_samples, waves, nonspeech_dict)
                             
     checkpoints_path = argv['checkpoints']
     if not os.path.exists(checkpoints_path):

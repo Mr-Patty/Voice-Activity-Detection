@@ -90,7 +90,7 @@ if __name__ == '__main__':
         providers = ['CUDAExecutionProvider']
     else:
         providers = ['CPUExecutionProvider']
-    test_X, test_y = getTestSamples(max_samples, test_path, dev_samples)
+    test_X, test_y = get_test_samples(max_samples, test_path, dev_samples)
     target, pred = testModel(model, test_X, test_y, device, model_type=model_type, providers=providers)
     
     tmp_pred = np.vstack(pred).squeeze(1) > thr
