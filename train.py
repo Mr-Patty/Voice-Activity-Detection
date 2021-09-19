@@ -19,7 +19,6 @@ class CustomDataset(torch.utils.data.Dataset):
     def __init__(self,sample, target):
         self.samples = sample
         self.targets = target
-        
 
     def __getitem__(self, n):
         return self.samples[n].float(), torch.from_numpy(self.targets[n]).float()
@@ -28,7 +27,8 @@ class CustomDataset(torch.utils.data.Dataset):
         return len(self.samples)
 
 
-def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64, device='cuda', each=20, step_size=5, class_weight=[0.65, 0.35]):
+def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64, device='cuda', each=20, step_size=5,
+               class_weight=[0.65, 0.35]):
     
     model.to(device)
     optim = torch.optim.Adam(model.parameters(), lr=lr)
@@ -69,7 +69,6 @@ def trainModel(model, X, y, checkpoints_path, lr=1e-3, EPOCHS=10, batch_size=64,
 
                 loss.backward()
                 optim.step()
-
 
                 mean_loss += loss.detach().cpu().item()*len(batch_x)
             mean_loss /= len(train_dataset)
